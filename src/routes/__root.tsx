@@ -72,14 +72,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { title: "GarageFlow UK — Garage management software with DVLA vehicle lookup" },
+      { name: "description", content: "GarageFlow UK is the modern operating system for UK garages, MOT centres and fleets. Instant DVLA vehicle lookup, MOT tracking, workshop scheduling, invoicing and CRM — built for British workshops." },
+      { name: "author", content: "GarageFlow UK" },
+      { property: "og:title", content: "GarageFlow UK — Garage management software with DVLA vehicle lookup" },
+      { property: "og:description", content: "The modern operating system for UK garages, MOT centres and fleets." },
       { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary" },
-      { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:card", content: "summary_large_image" },
+
     ],
     links: [
       {
