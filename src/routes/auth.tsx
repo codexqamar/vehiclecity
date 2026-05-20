@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { Logo } from "@/components/site/Logo";
 import { Button } from "@/components/ui/button";
@@ -13,6 +13,8 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { ArrowLeft, Loader2 } from "lucide-react";
+import { supabase } from "@/lib/supabase";
+import { toast } from "sonner";
 
 export const Route = createFileRoute("/auth")({
   head: () => ({
@@ -24,14 +26,42 @@ export const Route = createFileRoute("/auth")({
 function AuthPage() {
   const [isLogin, setIsLogin] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [businessName, setBusinessName] = useState("");
+  const navigate = useNavigate();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    // Simulate auth and redirect
-    setTimeout(() => {
-      window.location.href = "/app";
-    }, 1500);
+
+    try {
+      if (isLogin) {
+        const { error } = await supabase.auth.signInWithPassword({
+          email,
+          password,
+        });
+        if (error) throw error;
+        toast.success("Signed in successfully");
+        navigate({ to: "/app" });
+      } else {
+        const { error } = await supabase.auth.signUp({
+          email,
+          password,
+          options: {
+            data: {
+              business_name: businessName,
+            },
+          },
+        });
+        if (error) throw error;
+        toast.success("Check your email for the confirmation link");
+      }
+    } catch (error: any) {
+      toast.error(error.message || "An error occurred during authentication");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -58,12 +88,25 @@ function AuthPage() {
             {!isLogin && (
               <div className="grid gap-2">
                 <Label htmlFor="business">Business Name</Label>
-                <Input id="business" placeholder="Reliable Motors" required />
+                <Input
+                  id="business"
+                  placeholder="Reliable Motors"
+                  value={businessName}
+                  onChange={(e) => setBusinessName(e.target.value)}
+                  required
+                />
               </div>
             )}
             <div className="grid gap-2">
               <Label htmlFor="email">Email address</Label>
-              <Input id="email" type="email" placeholder="name@example.com" required />
+              <Input
+                id="email"
+                type="email"
+                placeholder="name@example.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
             </div>
             <div className="grid gap-2">
               <div className="flex items-center justify-between">
@@ -74,7 +117,13 @@ function AuthPage() {
                   </button>
                 )}
               </div>
-              <Input id="password" type="password" required />
+              <Input
+                id="password"
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
             </div>
             <Button type="submit" className="w-full" disabled={isLoading}>
               {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}

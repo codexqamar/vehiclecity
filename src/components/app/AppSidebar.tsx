@@ -1,6 +1,9 @@
-import { Link, useRouterState } from "@tanstack/react-router";
+import { Link, useRouterState, useNavigate } from "@tanstack/react-router";
 import { Logo } from "@/components/site/Logo";
 import { cn } from "@/lib/utils";
+import { useEffect, useState } from "react";
+import { supabase } from "@/lib/supabase";
+import { toast } from "sonner";
 import {
   LayoutDashboard,
   Search,
@@ -47,16 +50,44 @@ const NAV = [
 
 export function AppSidebar() {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const navigate = useNavigate();
+  const [user, setUser] = useState<any>(null);
+
+  useEffect(() => {
+    const getUser = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      setUser(user);
+    };
+    getUser();
+  }, []);
+
+  const handleSignOut = async () => {
+    try {
+      const { error } = await supabase.auth.signOut();
+      if (error) throw error;
+      toast.success("Signed out successfully");
+      navigate({ to: "/auth" });
+    } catch (error: any) {
+      toast.error(error.message || "Error signing out");
+    }
+  };
+
   return (
     <aside className="hidden w-60 shrink-0 flex-col border-r border-sidebar-border bg-sidebar text-sidebar-foreground md:flex">
       {/* Workspace switcher */}
-      <button className="flex items-center gap-2 border-b border-sidebar-border px-3 py-3 text-left hover:bg-sidebar-accent/60 transition">
+      <button 
+        onClick={() => toast.info("Workspace switching coming soon")}
+        className="flex items-center gap-2 border-b border-sidebar-border px-3 py-3 text-left hover:bg-sidebar-accent/60 transition"
+      >
         <Logo variant="light" />
         <ChevronsUpDown className="ml-auto h-3.5 w-3.5 text-sidebar-foreground/60" />
       </button>
 
       <div className="px-3 py-3">
-        <button className="flex w-full items-center gap-2 rounded-md bg-sidebar-accent px-2.5 py-1.5 text-[13px] text-sidebar-foreground/80 hover:bg-sidebar-accent/80 transition">
+        <button 
+          onClick={() => toast.info("Press ⌘K to open search")}
+          className="flex w-full items-center gap-2 rounded-md bg-sidebar-accent px-2.5 py-1.5 text-[13px] text-sidebar-foreground/80 hover:bg-sidebar-accent/80 transition"
+        >
           <Search className="h-3.5 w-3.5" />
           <span>Search or jump to…</span>
           <kbd className="ml-auto rounded border border-sidebar-border px-1.5 py-0.5 text-[10px] font-mono text-sidebar-foreground/60">
@@ -103,17 +134,19 @@ export function AppSidebar() {
 
       <div className="border-t border-sidebar-border p-3">
         <div className="flex items-center gap-2">
-          <div className="flex h-8 w-8 items-center justify-center rounded-full bg-accent text-sm font-medium text-accent-foreground">
-            SP
+          <div className="flex h-8 w-8 items-center justify-center rounded-full bg-accent text-sm font-medium text-accent-foreground uppercase">
+            {user?.email?.[0] || "U"}
           </div>
           <div className="min-w-0 text-[13px]">
-            <div className="truncate font-medium text-sidebar-foreground">Sarah Patel</div>
+            <div className="truncate font-medium text-sidebar-foreground">
+              {user?.user_metadata?.business_name || "Workspace User"}
+            </div>
             <div className="truncate text-[11px] text-sidebar-foreground/60">
-              Reliable Motors · Owner
+              {user?.email || "user@example.com"}
             </div>
           </div>
           <button
-            onClick={() => (window.location.href = "/auth")}
+            onClick={handleSignOut}
             className="ml-auto rounded-md p-1.5 text-sidebar-foreground/60 hover:bg-destructive/10 hover:text-destructive transition-colors"
             aria-label="Sign out"
             title="Sign out"
