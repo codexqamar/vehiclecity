@@ -14,9 +14,13 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AppIndexRouteImport } from './routes/app.index'
 import { Route as AppWorkshopRouteImport } from './routes/app.workshop'
 import { Route as AppVehiclesRouteImport } from './routes/app.vehicles'
+import { Route as AppSettingsRouteImport } from './routes/app.settings'
 import { Route as AppLookupRouteImport } from './routes/app.lookup'
 import { Route as AppInvoicesRouteImport } from './routes/app.invoices'
+import { Route as AppFleetRouteImport } from './routes/app.fleet'
 import { Route as AppCustomersRouteImport } from './routes/app.customers'
+import { Route as AppCalendarRouteImport } from './routes/app.calendar'
+import { Route as AppAnalyticsRouteImport } from './routes/app.analytics'
 
 const AppRoute = AppRouteImport.update({
   id: '/app',
@@ -43,6 +47,11 @@ const AppVehiclesRoute = AppVehiclesRouteImport.update({
   path: '/vehicles',
   getParentRoute: () => AppRoute,
 } as any)
+const AppSettingsRoute = AppSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppLookupRoute = AppLookupRouteImport.update({
   id: '/lookup',
   path: '/lookup',
@@ -53,27 +62,50 @@ const AppInvoicesRoute = AppInvoicesRouteImport.update({
   path: '/invoices',
   getParentRoute: () => AppRoute,
 } as any)
+const AppFleetRoute = AppFleetRouteImport.update({
+  id: '/fleet',
+  path: '/fleet',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppCustomersRoute = AppCustomersRouteImport.update({
   id: '/customers',
   path: '/customers',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppCalendarRoute = AppCalendarRouteImport.update({
+  id: '/calendar',
+  path: '/calendar',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppAnalyticsRoute = AppAnalyticsRouteImport.update({
+  id: '/analytics',
+  path: '/analytics',
   getParentRoute: () => AppRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/app': typeof AppRouteWithChildren
+  '/app/analytics': typeof AppAnalyticsRoute
+  '/app/calendar': typeof AppCalendarRoute
   '/app/customers': typeof AppCustomersRoute
+  '/app/fleet': typeof AppFleetRoute
   '/app/invoices': typeof AppInvoicesRoute
   '/app/lookup': typeof AppLookupRoute
+  '/app/settings': typeof AppSettingsRoute
   '/app/vehicles': typeof AppVehiclesRoute
   '/app/workshop': typeof AppWorkshopRoute
   '/app/': typeof AppIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/app/analytics': typeof AppAnalyticsRoute
+  '/app/calendar': typeof AppCalendarRoute
   '/app/customers': typeof AppCustomersRoute
+  '/app/fleet': typeof AppFleetRoute
   '/app/invoices': typeof AppInvoicesRoute
   '/app/lookup': typeof AppLookupRoute
+  '/app/settings': typeof AppSettingsRoute
   '/app/vehicles': typeof AppVehiclesRoute
   '/app/workshop': typeof AppWorkshopRoute
   '/app': typeof AppIndexRoute
@@ -82,9 +114,13 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/app': typeof AppRouteWithChildren
+  '/app/analytics': typeof AppAnalyticsRoute
+  '/app/calendar': typeof AppCalendarRoute
   '/app/customers': typeof AppCustomersRoute
+  '/app/fleet': typeof AppFleetRoute
   '/app/invoices': typeof AppInvoicesRoute
   '/app/lookup': typeof AppLookupRoute
+  '/app/settings': typeof AppSettingsRoute
   '/app/vehicles': typeof AppVehiclesRoute
   '/app/workshop': typeof AppWorkshopRoute
   '/app/': typeof AppIndexRoute
@@ -94,18 +130,26 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/app'
+    | '/app/analytics'
+    | '/app/calendar'
     | '/app/customers'
+    | '/app/fleet'
     | '/app/invoices'
     | '/app/lookup'
+    | '/app/settings'
     | '/app/vehicles'
     | '/app/workshop'
     | '/app/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/app/analytics'
+    | '/app/calendar'
     | '/app/customers'
+    | '/app/fleet'
     | '/app/invoices'
     | '/app/lookup'
+    | '/app/settings'
     | '/app/vehicles'
     | '/app/workshop'
     | '/app'
@@ -113,9 +157,13 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/app'
+    | '/app/analytics'
+    | '/app/calendar'
     | '/app/customers'
+    | '/app/fleet'
     | '/app/invoices'
     | '/app/lookup'
+    | '/app/settings'
     | '/app/vehicles'
     | '/app/workshop'
     | '/app/'
@@ -163,6 +211,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppVehiclesRouteImport
       parentRoute: typeof AppRoute
     }
+    '/app/settings': {
+      id: '/app/settings'
+      path: '/settings'
+      fullPath: '/app/settings'
+      preLoaderRoute: typeof AppSettingsRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/app/lookup': {
       id: '/app/lookup'
       path: '/lookup'
@@ -177,6 +232,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppInvoicesRouteImport
       parentRoute: typeof AppRoute
     }
+    '/app/fleet': {
+      id: '/app/fleet'
+      path: '/fleet'
+      fullPath: '/app/fleet'
+      preLoaderRoute: typeof AppFleetRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/app/customers': {
       id: '/app/customers'
       path: '/customers'
@@ -184,22 +246,44 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppCustomersRouteImport
       parentRoute: typeof AppRoute
     }
+    '/app/calendar': {
+      id: '/app/calendar'
+      path: '/calendar'
+      fullPath: '/app/calendar'
+      preLoaderRoute: typeof AppCalendarRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/analytics': {
+      id: '/app/analytics'
+      path: '/analytics'
+      fullPath: '/app/analytics'
+      preLoaderRoute: typeof AppAnalyticsRouteImport
+      parentRoute: typeof AppRoute
+    }
   }
 }
 
 interface AppRouteChildren {
+  AppAnalyticsRoute: typeof AppAnalyticsRoute
+  AppCalendarRoute: typeof AppCalendarRoute
   AppCustomersRoute: typeof AppCustomersRoute
+  AppFleetRoute: typeof AppFleetRoute
   AppInvoicesRoute: typeof AppInvoicesRoute
   AppLookupRoute: typeof AppLookupRoute
+  AppSettingsRoute: typeof AppSettingsRoute
   AppVehiclesRoute: typeof AppVehiclesRoute
   AppWorkshopRoute: typeof AppWorkshopRoute
   AppIndexRoute: typeof AppIndexRoute
 }
 
 const AppRouteChildren: AppRouteChildren = {
+  AppAnalyticsRoute: AppAnalyticsRoute,
+  AppCalendarRoute: AppCalendarRoute,
   AppCustomersRoute: AppCustomersRoute,
+  AppFleetRoute: AppFleetRoute,
   AppInvoicesRoute: AppInvoicesRoute,
   AppLookupRoute: AppLookupRoute,
+  AppSettingsRoute: AppSettingsRoute,
   AppVehiclesRoute: AppVehiclesRoute,
   AppWorkshopRoute: AppWorkshopRoute,
   AppIndexRoute: AppIndexRoute,
