@@ -4,7 +4,7 @@ import { Plate } from "@/components/site/Plate";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/app/fleet")({
-  head: () => ({ meta: [{ title: "Fleet · GarageFlow UK" }] }),
+  head: () => ({ meta: [{ title: "Fleet · VehicleCity UK" }] }),
   component: Fleet,
 });
 
@@ -15,10 +15,38 @@ const FLEETS = [
 ];
 
 const VEHICLES = [
-  { reg: "TS70 EVA", car: "Tesla Model Y", driver: "M. Reilly", mot: "09 Nov 2026", tax: "OK", mileage: "24,820" },
-  { reg: "BD22 LRY", car: "Mercedes Sprinter", driver: "K. Otieno", mot: "12 Aug 2026", tax: "OK", mileage: "118,402" },
-  { reg: "FN19 TRN", car: "Ford Transit Custom", driver: "P. Singh", mot: "02 Jun 2026", tax: "Due 30d", mileage: "94,310" },
-  { reg: "VW70 CAD", car: "VW Caddy Cargo", driver: "L. Adamou", mot: "18 Mar 2026", tax: "OK", mileage: "61,005" },
+  {
+    reg: "TS70 EVA",
+    car: "Tesla Model Y",
+    driver: "M. Reilly",
+    mot: "09 Nov 2026",
+    tax: "OK",
+    mileage: "24,820",
+  },
+  {
+    reg: "BD22 LRY",
+    car: "Mercedes Sprinter",
+    driver: "K. Otieno",
+    mot: "12 Aug 2026",
+    tax: "OK",
+    mileage: "118,402",
+  },
+  {
+    reg: "FN19 TRN",
+    car: "Ford Transit Custom",
+    driver: "P. Singh",
+    mot: "02 Jun 2026",
+    tax: "Due 30d",
+    mileage: "94,310",
+  },
+  {
+    reg: "VW70 CAD",
+    car: "VW Caddy Cargo",
+    driver: "L. Adamou",
+    mot: "18 Mar 2026",
+    tax: "OK",
+    mileage: "61,005",
+  },
 ];
 
 function Fleet() {
@@ -31,7 +59,9 @@ function Fleet() {
             <div key={f.name} className="rounded-xl border border-border bg-card p-5 shadow-soft">
               <div className="flex items-center justify-between">
                 <div className="font-semibold tracking-tight">{f.name}</div>
-                <span className="text-xs text-muted-foreground tabular-nums">{f.vehicles} vehicles</span>
+                <span className="text-xs text-muted-foreground tabular-nums">
+                  {f.vehicles} vehicles
+                </span>
               </div>
               <div className="mt-4 flex items-center gap-2">
                 <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-muted">
@@ -54,7 +84,9 @@ function Fleet() {
         </div>
 
         <div className="overflow-hidden rounded-xl border border-border bg-card shadow-soft">
-          <div className="border-b border-border px-5 py-3 text-sm font-semibold tracking-tight">Vehicles — Northgate Fleet</div>
+          <div className="border-b border-border px-5 py-3 text-sm font-semibold tracking-tight">
+            Vehicles — Northgate Fleet
+          </div>
           <table className="w-full text-sm">
             <thead className="bg-surface/60 text-[11px] uppercase tracking-wider text-muted-foreground">
               <tr>
@@ -77,10 +109,16 @@ function Fleet() {
                   <td className="px-4 py-3 text-muted-foreground">{v.driver}</td>
                   <td className="px-4 py-3 text-muted-foreground">{v.mot}</td>
                   <td className="px-4 py-3">
-                    <span className={cn(
-                      "rounded-full px-2 py-0.5 text-[11px] font-medium",
-                      v.tax === "OK" ? "bg-success/10 text-success" : "bg-warning/15 text-warning-foreground",
-                    )}>{v.tax}</span>
+                    <span
+                      className={cn(
+                        "rounded-full px-2 py-0.5 text-[11px] font-medium",
+                        v.tax === "OK"
+                          ? "bg-success/10 text-success"
+                          : "bg-warning/15 text-warning-foreground",
+                      )}
+                    >
+                      {v.tax}
+                    </span>
                   </td>
                   <td className="px-4 py-3 text-right tabular-nums">{v.mileage} mi</td>
                 </tr>

@@ -2,27 +2,47 @@ import { Link, useRouterState } from "@tanstack/react-router";
 import { Logo } from "@/components/site/Logo";
 import { cn } from "@/lib/utils";
 import {
-  LayoutDashboard, Search, Car, Users, ClipboardList, Calendar,
-  Receipt, Truck, BarChart3, Settings, ChevronsUpDown, Plus,
+  LayoutDashboard,
+  Search,
+  Car,
+  Users,
+  ClipboardList,
+  Calendar,
+  Receipt,
+  Truck,
+  BarChart3,
+  Settings,
+  ChevronsUpDown,
+  Plus,
+  LogOut,
 } from "lucide-react";
 
 const NAV = [
-  { group: "Workspace", items: [
-    { to: "/app", label: "Overview", icon: LayoutDashboard, exact: true },
-    { to: "/app/lookup", label: "DVLA Lookup", icon: Search, kbd: "L" },
-    { to: "/app/vehicles", label: "Vehicles", icon: Car },
-    { to: "/app/customers", label: "Customers", icon: Users },
-  ]},
-  { group: "Operations", items: [
-    { to: "/app/workshop", label: "Workshop", icon: ClipboardList },
-    { to: "/app/calendar", label: "Calendar", icon: Calendar },
-    { to: "/app/invoices", label: "Invoices", icon: Receipt },
-    { to: "/app/fleet", label: "Fleet", icon: Truck },
-  ]},
-  { group: "Insights", items: [
-    { to: "/app/analytics", label: "Analytics", icon: BarChart3 },
-    { to: "/app/settings", label: "Settings", icon: Settings },
-  ]},
+  {
+    group: "Workspace",
+    items: [
+      { to: "/app", label: "Overview", icon: LayoutDashboard, exact: true },
+      { to: "/app/lookup", label: "DVLA Lookup", icon: Search, kbd: "L" },
+      { to: "/app/vehicles", label: "Vehicles", icon: Car },
+      { to: "/app/customers", label: "Customers", icon: Users },
+    ],
+  },
+  {
+    group: "Operations",
+    items: [
+      { to: "/app/workshop", label: "Workshop", icon: ClipboardList },
+      { to: "/app/calendar", label: "Calendar", icon: Calendar },
+      { to: "/app/invoices", label: "Invoices", icon: Receipt },
+      { to: "/app/fleet", label: "Fleet", icon: Truck },
+    ],
+  },
+  {
+    group: "Insights",
+    items: [
+      { to: "/app/analytics", label: "Analytics", icon: BarChart3 },
+      { to: "/app/settings", label: "Settings", icon: Settings },
+    ],
+  },
 ];
 
 export function AppSidebar() {
@@ -39,7 +59,9 @@ export function AppSidebar() {
         <button className="flex w-full items-center gap-2 rounded-md bg-sidebar-accent px-2.5 py-1.5 text-[13px] text-sidebar-foreground/80 hover:bg-sidebar-accent/80 transition">
           <Search className="h-3.5 w-3.5" />
           <span>Search or jump to…</span>
-          <kbd className="ml-auto rounded border border-sidebar-border px-1.5 py-0.5 text-[10px] font-mono text-sidebar-foreground/60">⌘K</kbd>
+          <kbd className="ml-auto rounded border border-sidebar-border px-1.5 py-0.5 text-[10px] font-mono text-sidebar-foreground/60">
+            ⌘K
+          </kbd>
         </button>
       </div>
 
@@ -81,13 +103,22 @@ export function AppSidebar() {
 
       <div className="border-t border-sidebar-border p-3">
         <div className="flex items-center gap-2">
-          <div className="flex h-8 w-8 items-center justify-center rounded-full bg-accent text-sm font-medium text-accent-foreground">SP</div>
-          <div className="min-w-0 text-[13px]">
-            <div className="truncate font-medium">Sarah Patel</div>
-            <div className="truncate text-[11px] text-sidebar-foreground/60">Reliable Motors · Owner</div>
+          <div className="flex h-8 w-8 items-center justify-center rounded-full bg-accent text-sm font-medium text-accent-foreground">
+            SP
           </div>
-          <button className="ml-auto rounded-md p-1.5 text-sidebar-foreground/60 hover:bg-sidebar-accent hover:text-sidebar-foreground transition" aria-label="Add">
-            <Plus className="h-4 w-4" />
+          <div className="min-w-0 text-[13px]">
+            <div className="truncate font-medium text-sidebar-foreground">Sarah Patel</div>
+            <div className="truncate text-[11px] text-sidebar-foreground/60">
+              Reliable Motors · Owner
+            </div>
+          </div>
+          <button
+            onClick={() => (window.location.href = "/auth")}
+            className="ml-auto rounded-md p-1.5 text-sidebar-foreground/60 hover:bg-destructive/10 hover:text-destructive transition-colors"
+            aria-label="Sign out"
+            title="Sign out"
+          >
+            <LogOut className="h-4 w-4" />
           </button>
         </div>
       </div>

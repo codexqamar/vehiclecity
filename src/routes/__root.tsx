@@ -73,19 +73,62 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "VehicleCity UK" },
-      { name: "description", content: "VehicleCity UK is the modern garage management software built to excel" },
-      { name: "author", content: "GarageFlow UK" },
+      {
+        name: "description",
+        content: "VehicleCity UK is the modern garage management software built to excel",
+      },
+      { name: "author", content: "VehicleCity UK" },
       { property: "og:title", content: "VehicleCity UK" },
-      { property: "og:description", content: "VehicleCity UK is the modern garage management software built to excel" },
+      {
+        property: "og:description",
+        content: "VehicleCity UK is the modern garage management software built to excel",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
 
       { name: "twitter:title", content: "VehicleCity UK" },
-      { name: "twitter:description", content: "VehicleCity UK is the modern garage management software built to excel" },
-      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/6ad23261-d61b-4ed0-9db6-9163b538b9c1/id-preview-a829ae20--2f979767-df53-49cb-a5f1-6b418f057253.lovable.app-1779237227629.png" },
-      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/6ad23261-d61b-4ed0-9db6-9163b538b9c1/id-preview-a829ae20--2f979767-df53-49cb-a5f1-6b418f057253.lovable.app-1779237227629.png" },
+      {
+        name: "twitter:description",
+        content: "VehicleCity UK is the modern garage management software built to excel",
+      },
+      {
+        property: "og:image",
+        content:
+          "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/6ad23261-d61b-4ed0-9db6-9163b538b9c1/id-preview-a829ae20--2f979767-df53-49cb-a5f1-6b418f057253.lovable.app-1779237227629.png",
+      },
+      {
+        name: "twitter:image",
+        content:
+          "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/6ad23261-d61b-4ed0-9db6-9163b538b9c1/id-preview-a829ae20--2f979767-df53-49cb-a5f1-6b418f057253.lovable.app-1779237227629.png",
+      },
     ],
     links: [
+      {
+        rel: "icon",
+        href: "/Light.png",
+        type: "image/png",
+        sizes: "16x16",
+      },
+      {
+        rel: "icon",
+        href: "/Light.png",
+        type: "image/png",
+        sizes: "32x32",
+      },
+      {
+        rel: "icon",
+        href: "/Light.png",
+        type: "image/png",
+        sizes: "48x48",
+      },
+      {
+        rel: "apple-touch-icon",
+        href: "/Light.png",
+      },
+      {
+        rel: "shortcut icon",
+        href: "/Light.png",
+      },
       {
         rel: "stylesheet",
         href: appCss,

@@ -3,10 +3,7 @@ import { AppSidebar } from "@/components/app/AppSidebar";
 
 export const Route = createFileRoute("/app")({
   head: () => ({
-    meta: [
-      { title: "Workspace · GarageFlow UK" },
-      { name: "robots", content: "noindex" },
-    ],
+    meta: [{ title: "Workspace · VehicleCity UK" }, { name: "robots", content: "noindex" }],
   }),
   component: AppLayout,
 });

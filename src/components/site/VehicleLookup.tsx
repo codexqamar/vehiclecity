@@ -2,7 +2,18 @@ import { useState } from "react";
 import { lookupVehicle, type DvlaVehicle } from "@/lib/dvla";
 import { Plate } from "./Plate";
 import { cn } from "@/lib/utils";
-import { Search, Loader2, CheckCircle2, AlertTriangle, Fuel, Calendar, Gauge, Palette, Hash, ShieldCheck } from "lucide-react";
+import {
+  Search,
+  Loader2,
+  CheckCircle2,
+  AlertTriangle,
+  Fuel,
+  Calendar,
+  Gauge,
+  Palette,
+  Hash,
+  ShieldCheck,
+} from "lucide-react";
 
 const SUGGESTIONS = ["AB12 CDE", "LX21 KZV", "EV70 BYD", "RV68 OMG"];
 
@@ -15,13 +26,14 @@ export function VehicleLookup({ embedded = false }: { embedded?: boolean }) {
   async function run(input?: string) {
     const value = (input ?? reg).trim();
     if (!value) return;
-    setLoading(true); setError(null);
+    setLoading(true);
+    setError(null);
     try {
       const v = await lookupVehicle(value);
       setData(v);
       setReg(value);
-    } catch (e: any) {
-      setError(e.message ?? "Lookup failed");
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "Lookup failed");
       setData(null);
     } finally {
       setLoading(false);
@@ -31,7 +43,10 @@ export function VehicleLookup({ embedded = false }: { embedded?: boolean }) {
   return (
     <div className={cn("w-full", embedded && "max-w-none")}>
       <form
-        onSubmit={(e) => { e.preventDefault(); void run(); }}
+        onSubmit={(e) => {
+          e.preventDefault();
+          void run();
+        }}
         className="group relative flex items-center gap-2 rounded-xl border border-border bg-card p-2 shadow-elevated"
       >
         <div className="flex items-center gap-2 pl-2 text-muted-foreground">
@@ -45,7 +60,9 @@ export function VehicleLookup({ embedded = false }: { embedded?: boolean }) {
           placeholder="Enter UK registration  e.g. AB12 CDE"
           className="plate-font flex-1 bg-transparent px-2 py-2 text-base outline-none placeholder:font-sans placeholder:text-sm placeholder:font-normal placeholder:tracking-normal placeholder:text-muted-foreground"
           maxLength={8}
-          autoCorrect="off" autoCapitalize="characters" spellCheck={false}
+          autoCorrect="off"
+          autoCapitalize="characters"
+          spellCheck={false}
         />
         <button
           type="submit"
@@ -60,7 +77,11 @@ export function VehicleLookup({ embedded = false }: { embedded?: boolean }) {
       <div className="mt-3 flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
         <span>Try:</span>
         {SUGGESTIONS.map((s) => (
-          <button key={s} onClick={() => void run(s)} className="rounded-md border border-border bg-surface px-2 py-1 font-mono tracking-wider hover:border-accent/40 hover:text-foreground transition">
+          <button
+            key={s}
+            onClick={() => void run(s)}
+            className="rounded-md border border-border bg-surface px-2 py-1 font-mono tracking-wider hover:border-accent/40 hover:text-foreground transition"
+          >
             {s}
           </button>
         ))}
@@ -117,18 +138,34 @@ function VehicleCard({ v }: { v: DvlaVehicle }) {
         <div className="flex items-center gap-3">
           <Plate reg={v.registrationNumber} />
           <div>
-            <div className="font-semibold tracking-tight">{titleCase(v.make)} {v.model}</div>
-            <div className="text-xs text-muted-foreground">First registered {fmtMonth(v.monthOfFirstRegistration)} · {v.yearOfManufacture}</div>
+            <div className="font-semibold tracking-tight">
+              {titleCase(v.make)} {v.model}
+            </div>
+            <div className="text-xs text-muted-foreground">
+              First registered {fmtMonth(v.monthOfFirstRegistration)} · {v.yearOfManufacture}
+            </div>
           </div>
         </div>
         <div className="flex flex-wrap items-center gap-2">
-          <StatusPill ok={taxOk} okLabel={`Tax · ${v.taxStatus}`} badLabel={`Tax · ${v.taxStatus}`} />
-          <StatusPill ok={motOk} okLabel={`MOT · ${v.motStatus}`} badLabel={`MOT · ${v.motStatus}`} />
+          <StatusPill
+            ok={taxOk}
+            okLabel={`Tax · ${v.taxStatus}`}
+            badLabel={`Tax · ${v.taxStatus}`}
+          />
+          <StatusPill
+            ok={motOk}
+            okLabel={`MOT · ${v.motStatus}`}
+            badLabel={`MOT · ${v.motStatus}`}
+          />
         </div>
       </div>
       <dl className="grid grid-cols-2 gap-px bg-border md:grid-cols-4">
         <Field icon={Fuel} label="Fuel" value={titleCase(v.fuelType)} />
-        <Field icon={Gauge} label="Engine" value={v.engineCapacity ? `${v.engineCapacity} cc` : "—"} />
+        <Field
+          icon={Gauge}
+          label="Engine"
+          value={v.engineCapacity ? `${v.engineCapacity} cc` : "—"}
+        />
         <Field icon={Palette} label="Colour" value={v.colour} />
         <Field icon={Hash} label="CO₂" value={`${v.co2Emissions} g/km`} />
         <Field icon={ShieldCheck} label="Euro status" value={v.euroStatus} />
@@ -144,7 +181,15 @@ function VehicleCard({ v }: { v: DvlaVehicle }) {
   );
 }
 
-function Field({ icon: Icon, label, value }: { icon: any; label: string; value: string }) {
+function Field({
+  icon: Icon,
+  label,
+  value,
+}: {
+  icon: React.ComponentType<{ className?: string }>;
+  label: string;
+  value: string;
+}) {
   return (
     <div className="bg-card p-4">
       <div className="flex items-center gap-1.5 text-[11px] font-medium uppercase tracking-wider text-muted-foreground">
@@ -157,10 +202,14 @@ function Field({ icon: Icon, label, value }: { icon: any; label: string; value: 
 
 function StatusPill({ ok, okLabel, badLabel }: { ok: boolean; okLabel: string; badLabel: string }) {
   return (
-    <span className={cn(
-      "inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-xs font-medium",
-      ok ? "border-success/30 bg-success/10 text-success" : "border-destructive/30 bg-destructive/10 text-destructive",
-    )}>
+    <span
+      className={cn(
+        "inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-xs font-medium",
+        ok
+          ? "border-success/30 bg-success/10 text-success"
+          : "border-destructive/30 bg-destructive/10 text-destructive",
+      )}
+    >
       {ok ? <CheckCircle2 className="h-3.5 w-3.5" /> : <AlertTriangle className="h-3.5 w-3.5" />}
       {ok ? okLabel : badLabel}
     </span>

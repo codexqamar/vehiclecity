@@ -1,7 +1,16 @@
 import { Bell, Search, HelpCircle } from "lucide-react";
 import type { ReactNode } from "react";
+import { ThemeToggle } from "../ThemeToggle";
 
-export function AppTopbar({ title, subtitle, actions }: { title: string; subtitle?: string; actions?: ReactNode }) {
+export function AppTopbar({
+  title,
+  subtitle,
+  actions,
+}: {
+  title: string;
+  subtitle?: string;
+  actions?: ReactNode;
+}) {
   return (
     <header className="sticky top-0 z-30 flex items-center gap-3 border-b border-border bg-background/85 px-5 py-3 backdrop-blur">
       <div className="min-w-0">
@@ -17,10 +26,17 @@ export function AppTopbar({ title, subtitle, actions }: { title: string; subtitl
           <kbd className="rounded border border-border px-1 py-0.5 font-mono text-[10px]">⌘K</kbd>
         </div>
         {actions}
-        <button className="rounded-md border border-border bg-card p-1.5 text-muted-foreground hover:text-foreground transition" aria-label="Help">
+        <ThemeToggle />
+        <button
+          className="rounded-md border border-border bg-card p-1.5 text-muted-foreground hover:text-foreground transition"
+          aria-label="Help"
+        >
           <HelpCircle className="h-4 w-4" />
         </button>
-        <button className="relative rounded-md border border-border bg-card p-1.5 text-muted-foreground hover:text-foreground transition" aria-label="Notifications">
+        <button
+          className="relative rounded-md border border-border bg-card p-1.5 text-muted-foreground hover:text-foreground transition"
+          aria-label="Notifications"
+        >
           <Bell className="h-4 w-4" />
           <span className="absolute right-1 top-1 h-1.5 w-1.5 rounded-full bg-accent" />
         </button>

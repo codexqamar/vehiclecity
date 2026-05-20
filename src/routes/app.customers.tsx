@@ -3,17 +3,59 @@ import { AppTopbar } from "@/components/app/AppTopbar";
 import { Plus } from "lucide-react";
 
 export const Route = createFileRoute("/app/customers")({
-  head: () => ({ meta: [{ title: "Customers · GarageFlow UK" }] }),
+  head: () => ({ meta: [{ title: "Customers · VehicleCity UK" }] }),
   component: Customers,
 });
 
 const CUSTOMERS = [
-  { name: "Imran Khan", email: "imran.khan@gmail.com", phone: "07700 900 421", vehicles: 3, spend: "£1,840", tag: "Regular" },
-  { name: "Sarah Mitchell", email: "s.mitchell@me.com", phone: "07700 900 118", vehicles: 1, spend: "£620", tag: "Active" },
-  { name: "Aisha Begum", email: "aisha@northgate.co", phone: "07700 900 552", vehicles: 12, spend: "£14,210", tag: "Fleet" },
-  { name: "Daniel O'Connor", email: "dan.oc@outlook.com", phone: "07700 900 904", vehicles: 2, spend: "£3,420", tag: "VIP" },
-  { name: "Olivia Hart", email: "o.hart@gmail.com", phone: "07700 900 030", vehicles: 1, spend: "£185", tag: "New" },
-  { name: "Marcus Webb", email: "marcus@webb.dev", phone: "07700 900 712", vehicles: 1, spend: "£940", tag: "Regular" },
+  {
+    name: "Imran Khan",
+    email: "imran.khan@gmail.com",
+    phone: "07700 900 421",
+    vehicles: 3,
+    spend: "£1,840",
+    tag: "Regular",
+  },
+  {
+    name: "Sarah Mitchell",
+    email: "s.mitchell@me.com",
+    phone: "07700 900 118",
+    vehicles: 1,
+    spend: "£620",
+    tag: "Active",
+  },
+  {
+    name: "Aisha Begum",
+    email: "aisha@northgate.co",
+    phone: "07700 900 552",
+    vehicles: 12,
+    spend: "£14,210",
+    tag: "Fleet",
+  },
+  {
+    name: "Daniel O'Connor",
+    email: "dan.oc@outlook.com",
+    phone: "07700 900 904",
+    vehicles: 2,
+    spend: "£3,420",
+    tag: "VIP",
+  },
+  {
+    name: "Olivia Hart",
+    email: "o.hart@gmail.com",
+    phone: "07700 900 030",
+    vehicles: 1,
+    spend: "£185",
+    tag: "New",
+  },
+  {
+    name: "Marcus Webb",
+    email: "marcus@webb.dev",
+    phone: "07700 900 712",
+    vehicles: 1,
+    spend: "£940",
+    tag: "Regular",
+  },
 ];
 
 function Customers() {
@@ -46,7 +88,10 @@ function Customers() {
                   <td className="px-4 py-3">
                     <div className="flex items-center gap-3">
                       <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-[11px] font-medium text-primary-foreground">
-                        {c.name.split(" ").map(w => w[0]).join("")}
+                        {c.name
+                          .split(" ")
+                          .map((w) => w[0])
+                          .join("")}
                       </div>
                       <span className="font-medium">{c.name}</span>
                     </div>
@@ -58,7 +103,9 @@ function Customers() {
                   <td className="px-4 py-3 tabular-nums">{c.vehicles}</td>
                   <td className="px-4 py-3 tabular-nums font-medium">{c.spend}</td>
                   <td className="px-4 py-3">
-                    <span className="rounded-full border border-border bg-surface px-2 py-0.5 text-[11px] font-medium text-muted-foreground">{c.tag}</span>
+                    <span className="rounded-full border border-border bg-surface px-2 py-0.5 text-[11px] font-medium text-muted-foreground">
+                      {c.tag}
+                    </span>
                   </td>
                 </tr>
               ))}

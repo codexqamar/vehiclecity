@@ -8,7 +8,8 @@ export function SiteFooter() {
         <div className="md:col-span-2">
           <Logo />
           <p className="mt-4 max-w-xs text-sm text-muted-foreground">
-            The operating system for British workshops. Built in the UK, designed around how garages really work.
+            The operating system for British workshops. Built in the UK, designed around how garages
+            really work.
           </p>
           <div className="mt-6 flex items-center gap-3 text-xs text-muted-foreground">
             <span className="inline-flex items-center gap-1.5 rounded-md border border-border bg-card px-2 py-1">
@@ -17,19 +18,39 @@ export function SiteFooter() {
             <span>ISO 27001 in progress</span>
           </div>
         </div>
-        <Col title="Product" links={[
-          ["DVLA Lookup", "/dvla"], ["Features", "/features"], ["Pricing", "/pricing"], ["Changelog", "#"],
-        ]} />
-        <Col title="Company" links={[
-          ["Customers", "/customers"], ["Careers", "#"], ["Contact", "#"], ["Press", "#"],
-        ]} />
-        <Col title="Legal" links={[
-          ["Privacy", "#"], ["Terms", "#"], ["DPA", "#"], ["Security", "#"],
-        ]} />
+        <Col
+          title="Product"
+          links={[
+            ["DVLA Lookup", "/dvla"],
+            ["Features", "/features"],
+            ["Pricing", "/pricing"],
+            ["FAQ", "/faq"],
+          ]}
+        />
+        <Col
+          title="Company"
+          links={[
+            ["Customers", "/customers"],
+            ["Careers", "/careers"],
+            ["Contact", "/contact"],
+          ]}
+        />
+        <Col
+          title="Legal"
+          links={[
+            ["Privacy", "/privacy"],
+            ["Terms", "/terms"],
+            ["DPA", "/dpa"],
+            ["Security", "/security"],
+          ]}
+        />
       </div>
       <div className="border-t border-border">
         <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-3 px-4 py-5 text-xs text-muted-foreground sm:px-6">
-          <p>© {new Date().getFullYear()} GarageFlow UK Ltd. Registered in England & Wales. Company no. 14820917.</p>
+          <p>
+            © {new Date().getFullYear()} VehicleCity UK Ltd. Registered in England & Wales. Company
+            no. 14820917.
+          </p>
           <p>Made in Manchester · VAT GB 421 8830 12</p>
         </div>
       </div>
@@ -44,7 +65,15 @@ function Col({ title, links }: { title: string; links: [string, string][] }) {
       <ul className="mt-4 space-y-2.5 text-sm text-muted-foreground">
         {links.map(([label, href]) => (
           <li key={label}>
-            {href.startsWith("/") ? <Link to={href} className="hover:text-foreground transition">{label}</Link> : <a href={href} className="hover:text-foreground transition">{label}</a>}
+            {href.startsWith("/") ? (
+              <Link to={href} className="hover:text-foreground transition">
+                {label}
+              </Link>
+            ) : (
+              <a href={href} className="hover:text-foreground transition">
+                {label}
+              </a>
+            )}
           </li>
         ))}
       </ul>

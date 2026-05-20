@@ -2,17 +2,39 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { AppTopbar } from "@/components/app/AppTopbar";
 import { Plate } from "@/components/site/Plate";
 import { cn } from "@/lib/utils";
-import { Plus, ArrowUpRight, Search, Bell, Activity, Wrench, Calendar, TrendingUp } from "lucide-react";
-import { Area, AreaChart, ResponsiveContainer, Tooltip, XAxis, YAxis, CartesianGrid } from "recharts";
+import {
+  Plus,
+  ArrowUpRight,
+  Search,
+  Bell,
+  Activity,
+  Wrench,
+  Calendar,
+  TrendingUp,
+} from "lucide-react";
+import {
+  Area,
+  AreaChart,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+} from "recharts";
 
 export const Route = createFileRoute("/app/")({
-  head: () => ({ meta: [{ title: "Overview · GarageFlow UK" }] }),
+  head: () => ({ meta: [{ title: "Overview · VehicleCity UK" }] }),
   component: Overview,
 });
 
 const REVENUE = [
-  { d: "Mon", v: 2840 }, { d: "Tue", v: 3120 }, { d: "Wed", v: 2960 },
-  { d: "Thu", v: 4180 }, { d: "Fri", v: 5240 }, { d: "Sat", v: 3680 }, { d: "Sun", v: 1980 },
+  { d: "Mon", v: 2840 },
+  { d: "Tue", v: 3120 },
+  { d: "Wed", v: 2960 },
+  { d: "Thu", v: 4180 },
+  { d: "Fri", v: 5240 },
+  { d: "Sat", v: 3680 },
+  { d: "Sun", v: 1980 },
 ];
 
 function Overview() {
@@ -22,7 +44,10 @@ function Overview() {
         title="Workshop overview"
         subtitle="Tuesday, 20 May 2026 · Reliable Motors · Manchester"
         actions={
-          <Link to="/app/lookup" className="inline-flex items-center gap-1.5 rounded-md bg-primary px-3 py-1.5 text-sm font-medium text-primary-foreground hover:bg-primary/90 transition">
+          <Link
+            to="/app/lookup"
+            className="inline-flex items-center gap-1.5 rounded-md bg-primary px-3 py-1.5 text-sm font-medium text-primary-foreground hover:bg-primary/90 transition"
+          >
             <Plus className="h-3.5 w-3.5" /> New job
           </Link>
         }
@@ -56,7 +81,10 @@ function KpiGrid() {
   return (
     <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
       {KPIS.map((k) => (
-        <div key={k.k} className="group rounded-xl border border-border bg-card p-4 shadow-soft transition hover:border-foreground/15">
+        <div
+          key={k.k}
+          className="group rounded-xl border border-border bg-card p-4 shadow-soft transition hover:border-foreground/15"
+        >
           <div className="flex items-center justify-between">
             <div className="text-xs text-muted-foreground">{k.k}</div>
             <k.icon className="h-3.5 w-3.5 text-muted-foreground/60" />
@@ -94,13 +122,35 @@ function RevenueCard() {
               </linearGradient>
             </defs>
             <CartesianGrid stroke="var(--color-border)" vertical={false} />
-            <XAxis dataKey="d" tick={{ fontSize: 11, fill: "var(--color-muted-foreground)" }} axisLine={false} tickLine={false} />
-            <YAxis tick={{ fontSize: 11, fill: "var(--color-muted-foreground)" }} axisLine={false} tickLine={false} width={42} tickFormatter={(v) => `£${(v / 1000).toFixed(1)}k`} />
+            <XAxis
+              dataKey="d"
+              tick={{ fontSize: 11, fill: "var(--color-muted-foreground)" }}
+              axisLine={false}
+              tickLine={false}
+            />
+            <YAxis
+              tick={{ fontSize: 11, fill: "var(--color-muted-foreground)" }}
+              axisLine={false}
+              tickLine={false}
+              width={42}
+              tickFormatter={(v) => `£${(v / 1000).toFixed(1)}k`}
+            />
             <Tooltip
-              contentStyle={{ background: "var(--color-card)", border: "1px solid var(--color-border)", borderRadius: 8, fontSize: 12 }}
+              contentStyle={{
+                background: "var(--color-card)",
+                border: "1px solid var(--color-border)",
+                borderRadius: 8,
+                fontSize: 12,
+              }}
               formatter={(v: number) => [`£${v.toLocaleString()}`, "Revenue"]}
             />
-            <Area type="monotone" dataKey="v" stroke="var(--color-accent)" strokeWidth={2} fill="url(#rev)" />
+            <Area
+              type="monotone"
+              dataKey="v"
+              stroke="var(--color-accent)"
+              strokeWidth={2}
+              fill="url(#rev)"
+            />
           </AreaChart>
         </ResponsiveContainer>
       </div>
@@ -126,10 +176,17 @@ function ActivityFeed() {
         {items.map((i, idx) => (
           <li key={idx} className="flex items-start gap-3 px-5 py-3">
             <div className="mt-0.5 flex h-7 w-7 items-center justify-center rounded-full bg-muted text-[11px] font-medium">
-              {i.who.split(" ").map(w => w[0]).join("").slice(0,2)}
+              {i.who
+                .split(" ")
+                .map((w) => w[0])
+                .join("")
+                .slice(0, 2)}
             </div>
             <div className="flex-1 text-sm">
-              <div><span className="font-medium">{i.who}</span> <span className="text-muted-foreground">{i.what}</span></div>
+              <div>
+                <span className="font-medium">{i.who}</span>{" "}
+                <span className="text-muted-foreground">{i.what}</span>
+              </div>
               <div className="text-xs text-muted-foreground">{i.on}</div>
             </div>
             <div className="text-[11px] text-muted-foreground tabular-nums">{i.t}</div>
@@ -144,14 +201,23 @@ function UpcomingJobs() {
   const jobs = [
     { time: "09:30", reg: "MK67 TYR", car: "BMW 320d", svc: "MOT + service", bay: "Bay 1" },
     { time: "11:00", reg: "FG19 PLM", car: "Audi A4", svc: "Diagnostic — EML", bay: "Bay 3" },
-    { time: "13:15", reg: "BV21 RKE", car: "Vauxhall Astra", svc: "Brake replacement", bay: "Bay 2" },
+    {
+      time: "13:15",
+      reg: "BV21 RKE",
+      car: "Vauxhall Astra",
+      svc: "Brake replacement",
+      bay: "Bay 2",
+    },
     { time: "15:45", reg: "TS70 EVA", car: "Tesla Model Y", svc: "Annual check", bay: "EV bay" },
   ];
   return (
     <div className="rounded-xl border border-border bg-card shadow-soft">
       <div className="flex items-center justify-between border-b border-border px-5 py-3.5">
         <div className="text-sm font-semibold tracking-tight">Upcoming jobs</div>
-        <Link to="/app/calendar" className="text-xs text-muted-foreground hover:text-foreground inline-flex items-center gap-0.5">
+        <Link
+          to="/app/calendar"
+          className="text-xs text-muted-foreground hover:text-foreground inline-flex items-center gap-0.5"
+        >
           Calendar <ArrowUpRight className="h-3 w-3" />
         </Link>
       </div>
@@ -164,7 +230,9 @@ function UpcomingJobs() {
               <div className="truncate text-sm font-medium">{j.car}</div>
               <div className="truncate text-xs text-muted-foreground">{j.svc}</div>
             </div>
-            <span className="rounded-md border border-border bg-surface px-2 py-0.5 text-[11px] text-muted-foreground">{j.bay}</span>
+            <span className="rounded-md border border-border bg-surface px-2 py-0.5 text-[11px] text-muted-foreground">
+              {j.bay}
+            </span>
           </li>
         ))}
       </ul>
@@ -193,13 +261,21 @@ function MotAlerts() {
               <div className="truncate text-sm font-medium">{a.car}</div>
               <div className="truncate text-xs text-muted-foreground">{a.owner}</div>
             </div>
-            <span className={cn(
-              "rounded-full px-2 py-0.5 text-[11px] font-medium",
-              a.days <= 7 ? "bg-destructive/10 text-destructive" : a.days <= 14 ? "bg-warning/15 text-warning-foreground" : "bg-muted text-muted-foreground",
-            )}>
+            <span
+              className={cn(
+                "rounded-full px-2 py-0.5 text-[11px] font-medium",
+                a.days <= 7
+                  ? "bg-destructive/10 text-destructive"
+                  : a.days <= 14
+                    ? "bg-warning/15 text-warning-foreground"
+                    : "bg-muted text-muted-foreground",
+              )}
+            >
               {a.days} days
             </span>
-            <button className="rounded-md border border-border bg-surface px-2 py-1 text-xs hover:bg-card transition">Book</button>
+            <button className="rounded-md border border-border bg-surface px-2 py-1 text-xs hover:bg-card transition">
+              Book
+            </button>
           </li>
         ))}
       </ul>

@@ -1,12 +1,18 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { AppTopbar } from "@/components/app/AppTopbar";
+import { LogOut } from "lucide-react";
 
 export const Route = createFileRoute("/app/settings")({
-  head: () => ({ meta: [{ title: "Settings · GarageFlow UK" }] }),
+  head: () => ({ meta: [{ title: "Settings · VehicleCity UK" }] }),
   component: SettingsPage,
 });
 
 function SettingsPage() {
+  const handleLogout = () => {
+    // Simulate logout logic
+    window.location.href = "/auth";
+  };
+
   return (
     <>
       <AppTopbar title="Settings" subtitle="Workspace, team, integrations" />
@@ -38,10 +44,18 @@ function SettingsPage() {
           <Field label="SMS quiet hours" value="20:00 – 08:00" />
           <Field label="Daily digest" value="07:30 to owners" />
         </Card>
-        <Card title="Security">
+        <Card title="Security & Session">
           <Field label="Two-factor" value="Enforced for all admins" />
-          <Field label="Audit log" value="2,418 events (30 days)" />
           <Field label="Data region" value="UK South" />
+          <div className="p-4 pt-2">
+            <button
+              onClick={handleLogout}
+              className="flex w-full items-center justify-center gap-2 rounded-md bg-destructive/10 px-3 py-2 text-sm font-medium text-destructive hover:bg-destructive/20 transition-colors"
+            >
+              <LogOut className="h-4 w-4" />
+              Sign out of VehicleCity
+            </button>
+          </div>
         </Card>
       </div>
     </>
@@ -51,7 +65,9 @@ function SettingsPage() {
 function Card({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <div className="rounded-xl border border-border bg-card shadow-soft">
-      <div className="border-b border-border px-5 py-3 text-sm font-semibold tracking-tight">{title}</div>
+      <div className="border-b border-border px-5 py-3 text-sm font-semibold tracking-tight">
+        {title}
+      </div>
       <div className="divide-y divide-border">{children}</div>
     </div>
   );
@@ -64,12 +80,27 @@ function Field({ label, value, mono }: { label: string; value: string; mono?: bo
     </div>
   );
 }
-function Row({ label, status, tone }: { label: string; status: string; tone: "success" | "muted" | "accent" }) {
-  const toneCls = tone === "success" ? "bg-success/10 text-success" : tone === "accent" ? "bg-accent/10 text-accent" : "bg-muted text-muted-foreground";
+function Row({
+  label,
+  status,
+  tone,
+}: {
+  label: string;
+  status: string;
+  tone: "success" | "muted" | "accent";
+}) {
+  const toneCls =
+    tone === "success"
+      ? "bg-success/10 text-success"
+      : tone === "accent"
+        ? "bg-accent/10 text-accent"
+        : "bg-muted text-muted-foreground";
   return (
     <div className="flex items-center justify-between px-5 py-3 text-sm">
       <span className="font-medium">{label}</span>
-      <span className={"rounded-full px-2 py-0.5 text-[11px] font-medium " + toneCls}>{status}</span>
+      <span className={"rounded-full px-2 py-0.5 text-[11px] font-medium " + toneCls}>
+        {status}
+      </span>
     </div>
   );
 }

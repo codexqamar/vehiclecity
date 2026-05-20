@@ -5,7 +5,7 @@ import { Plate } from "@/components/site/Plate";
 import { Bookmark, History } from "lucide-react";
 
 export const Route = createFileRoute("/app/lookup")({
-  head: () => ({ meta: [{ title: "DVLA Lookup · GarageFlow UK" }] }),
+  head: () => ({ meta: [{ title: "DVLA Lookup · VehicleCity UK" }] }),
   component: Lookup,
 });
 
@@ -25,7 +25,10 @@ const SAVED = [
 function Lookup() {
   return (
     <>
-      <AppTopbar title="DVLA Vehicle Lookup" subtitle="Real-time data from the DVLA Vehicle Enquiry Service" />
+      <AppTopbar
+        title="DVLA Vehicle Lookup"
+        subtitle="Real-time data from the DVLA Vehicle Enquiry Service"
+      />
       <div className="grid gap-5 p-5 lg:grid-cols-[1fr_300px]">
         <div>
           <VehicleLookup />
@@ -37,7 +40,11 @@ function Lookup() {
               </span>
             </div>
             <div className="mt-4 grid grid-cols-3 gap-3 text-center">
-              {[["Avg. response", "412 ms"], ["Lookups today", "47"], ["Cache hit rate", "68%"]].map(([k,v]) => (
+              {[
+                ["Avg. response", "412 ms"],
+                ["Lookups today", "47"],
+                ["Cache hit rate", "68%"],
+              ].map(([k, v]) => (
                 <div key={k} className="rounded-md border border-border bg-surface/40 p-3">
                   <div className="text-[11px] text-muted-foreground">{k}</div>
                   <div className="mt-1 text-sm font-semibold tabular-nums">{v}</div>
@@ -58,7 +65,9 @@ function Lookup() {
                   <Plate reg={r.reg} className="text-xs" />
                   <div className="flex-1 min-w-0">
                     <div className="truncate text-sm font-medium">{r.car}</div>
-                    <div className="text-[11px] text-muted-foreground">{r.when} · {r.who}</div>
+                    <div className="text-[11px] text-muted-foreground">
+                      {r.when} · {r.who}
+                    </div>
                   </div>
                 </li>
               ))}
