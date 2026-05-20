@@ -11,6 +11,12 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as AppRouteImport } from './routes/app'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AppIndexRouteImport } from './routes/app.index'
+import { Route as AppWorkshopRouteImport } from './routes/app.workshop'
+import { Route as AppVehiclesRouteImport } from './routes/app.vehicles'
+import { Route as AppLookupRouteImport } from './routes/app.lookup'
+import { Route as AppInvoicesRouteImport } from './routes/app.invoices'
+import { Route as AppCustomersRouteImport } from './routes/app.customers'
 
 const AppRoute = AppRouteImport.update({
   id: '/app',
@@ -22,31 +28,102 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AppIndexRoute = AppIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppWorkshopRoute = AppWorkshopRouteImport.update({
+  id: '/workshop',
+  path: '/workshop',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppVehiclesRoute = AppVehiclesRouteImport.update({
+  id: '/vehicles',
+  path: '/vehicles',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppLookupRoute = AppLookupRouteImport.update({
+  id: '/lookup',
+  path: '/lookup',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppInvoicesRoute = AppInvoicesRouteImport.update({
+  id: '/invoices',
+  path: '/invoices',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppCustomersRoute = AppCustomersRouteImport.update({
+  id: '/customers',
+  path: '/customers',
+  getParentRoute: () => AppRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/app': typeof AppRoute
+  '/app': typeof AppRouteWithChildren
+  '/app/customers': typeof AppCustomersRoute
+  '/app/invoices': typeof AppInvoicesRoute
+  '/app/lookup': typeof AppLookupRoute
+  '/app/vehicles': typeof AppVehiclesRoute
+  '/app/workshop': typeof AppWorkshopRoute
+  '/app/': typeof AppIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/app': typeof AppRoute
+  '/app/customers': typeof AppCustomersRoute
+  '/app/invoices': typeof AppInvoicesRoute
+  '/app/lookup': typeof AppLookupRoute
+  '/app/vehicles': typeof AppVehiclesRoute
+  '/app/workshop': typeof AppWorkshopRoute
+  '/app': typeof AppIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/app': typeof AppRoute
+  '/app': typeof AppRouteWithChildren
+  '/app/customers': typeof AppCustomersRoute
+  '/app/invoices': typeof AppInvoicesRoute
+  '/app/lookup': typeof AppLookupRoute
+  '/app/vehicles': typeof AppVehiclesRoute
+  '/app/workshop': typeof AppWorkshopRoute
+  '/app/': typeof AppIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/app'
+  fullPaths:
+    | '/'
+    | '/app'
+    | '/app/customers'
+    | '/app/invoices'
+    | '/app/lookup'
+    | '/app/vehicles'
+    | '/app/workshop'
+    | '/app/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/app'
-  id: '__root__' | '/' | '/app'
+  to:
+    | '/'
+    | '/app/customers'
+    | '/app/invoices'
+    | '/app/lookup'
+    | '/app/vehicles'
+    | '/app/workshop'
+    | '/app'
+  id:
+    | '__root__'
+    | '/'
+    | '/app'
+    | '/app/customers'
+    | '/app/invoices'
+    | '/app/lookup'
+    | '/app/vehicles'
+    | '/app/workshop'
+    | '/app/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  AppRoute: typeof AppRoute
+  AppRoute: typeof AppRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
@@ -65,12 +142,74 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/app/': {
+      id: '/app/'
+      path: '/'
+      fullPath: '/app/'
+      preLoaderRoute: typeof AppIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/workshop': {
+      id: '/app/workshop'
+      path: '/workshop'
+      fullPath: '/app/workshop'
+      preLoaderRoute: typeof AppWorkshopRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/vehicles': {
+      id: '/app/vehicles'
+      path: '/vehicles'
+      fullPath: '/app/vehicles'
+      preLoaderRoute: typeof AppVehiclesRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/lookup': {
+      id: '/app/lookup'
+      path: '/lookup'
+      fullPath: '/app/lookup'
+      preLoaderRoute: typeof AppLookupRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/invoices': {
+      id: '/app/invoices'
+      path: '/invoices'
+      fullPath: '/app/invoices'
+      preLoaderRoute: typeof AppInvoicesRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/customers': {
+      id: '/app/customers'
+      path: '/customers'
+      fullPath: '/app/customers'
+      preLoaderRoute: typeof AppCustomersRouteImport
+      parentRoute: typeof AppRoute
+    }
   }
 }
 
+interface AppRouteChildren {
+  AppCustomersRoute: typeof AppCustomersRoute
+  AppInvoicesRoute: typeof AppInvoicesRoute
+  AppLookupRoute: typeof AppLookupRoute
+  AppVehiclesRoute: typeof AppVehiclesRoute
+  AppWorkshopRoute: typeof AppWorkshopRoute
+  AppIndexRoute: typeof AppIndexRoute
+}
+
+const AppRouteChildren: AppRouteChildren = {
+  AppCustomersRoute: AppCustomersRoute,
+  AppInvoicesRoute: AppInvoicesRoute,
+  AppLookupRoute: AppLookupRoute,
+  AppVehiclesRoute: AppVehiclesRoute,
+  AppWorkshopRoute: AppWorkshopRoute,
+  AppIndexRoute: AppIndexRoute,
+}
+
+const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  AppRoute: AppRoute,
+  AppRoute: AppRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
