@@ -9,38 +9,260 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as PricingRouteImport } from './routes/pricing'
+import { Route as FeaturesRouteImport } from './routes/features'
+import { Route as DvlaRouteImport } from './routes/dvla'
+import { Route as CustomersRouteImport } from './routes/customers'
+import { Route as AppRouteImport } from './routes/app'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AppIndexRouteImport } from './routes/app.index'
+import { Route as AppWorkshopRouteImport } from './routes/app.workshop'
+import { Route as AppVehiclesRouteImport } from './routes/app.vehicles'
+import { Route as AppSettingsRouteImport } from './routes/app.settings'
+import { Route as AppLookupRouteImport } from './routes/app.lookup'
+import { Route as AppInvoicesRouteImport } from './routes/app.invoices'
+import { Route as AppFleetRouteImport } from './routes/app.fleet'
+import { Route as AppCustomersRouteImport } from './routes/app.customers'
+import { Route as AppCalendarRouteImport } from './routes/app.calendar'
+import { Route as AppAnalyticsRouteImport } from './routes/app.analytics'
 
+const PricingRoute = PricingRouteImport.update({
+  id: '/pricing',
+  path: '/pricing',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FeaturesRoute = FeaturesRouteImport.update({
+  id: '/features',
+  path: '/features',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DvlaRoute = DvlaRouteImport.update({
+  id: '/dvla',
+  path: '/dvla',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CustomersRoute = CustomersRouteImport.update({
+  id: '/customers',
+  path: '/customers',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AppRoute = AppRouteImport.update({
+  id: '/app',
+  path: '/app',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AppIndexRoute = AppIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppWorkshopRoute = AppWorkshopRouteImport.update({
+  id: '/workshop',
+  path: '/workshop',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppVehiclesRoute = AppVehiclesRouteImport.update({
+  id: '/vehicles',
+  path: '/vehicles',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppSettingsRoute = AppSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppLookupRoute = AppLookupRouteImport.update({
+  id: '/lookup',
+  path: '/lookup',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppInvoicesRoute = AppInvoicesRouteImport.update({
+  id: '/invoices',
+  path: '/invoices',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppFleetRoute = AppFleetRouteImport.update({
+  id: '/fleet',
+  path: '/fleet',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppCustomersRoute = AppCustomersRouteImport.update({
+  id: '/customers',
+  path: '/customers',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppCalendarRoute = AppCalendarRouteImport.update({
+  id: '/calendar',
+  path: '/calendar',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppAnalyticsRoute = AppAnalyticsRouteImport.update({
+  id: '/analytics',
+  path: '/analytics',
+  getParentRoute: () => AppRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/app': typeof AppRouteWithChildren
+  '/customers': typeof CustomersRoute
+  '/dvla': typeof DvlaRoute
+  '/features': typeof FeaturesRoute
+  '/pricing': typeof PricingRoute
+  '/app/analytics': typeof AppAnalyticsRoute
+  '/app/calendar': typeof AppCalendarRoute
+  '/app/customers': typeof AppCustomersRoute
+  '/app/fleet': typeof AppFleetRoute
+  '/app/invoices': typeof AppInvoicesRoute
+  '/app/lookup': typeof AppLookupRoute
+  '/app/settings': typeof AppSettingsRoute
+  '/app/vehicles': typeof AppVehiclesRoute
+  '/app/workshop': typeof AppWorkshopRoute
+  '/app/': typeof AppIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/customers': typeof CustomersRoute
+  '/dvla': typeof DvlaRoute
+  '/features': typeof FeaturesRoute
+  '/pricing': typeof PricingRoute
+  '/app/analytics': typeof AppAnalyticsRoute
+  '/app/calendar': typeof AppCalendarRoute
+  '/app/customers': typeof AppCustomersRoute
+  '/app/fleet': typeof AppFleetRoute
+  '/app/invoices': typeof AppInvoicesRoute
+  '/app/lookup': typeof AppLookupRoute
+  '/app/settings': typeof AppSettingsRoute
+  '/app/vehicles': typeof AppVehiclesRoute
+  '/app/workshop': typeof AppWorkshopRoute
+  '/app': typeof AppIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/app': typeof AppRouteWithChildren
+  '/customers': typeof CustomersRoute
+  '/dvla': typeof DvlaRoute
+  '/features': typeof FeaturesRoute
+  '/pricing': typeof PricingRoute
+  '/app/analytics': typeof AppAnalyticsRoute
+  '/app/calendar': typeof AppCalendarRoute
+  '/app/customers': typeof AppCustomersRoute
+  '/app/fleet': typeof AppFleetRoute
+  '/app/invoices': typeof AppInvoicesRoute
+  '/app/lookup': typeof AppLookupRoute
+  '/app/settings': typeof AppSettingsRoute
+  '/app/vehicles': typeof AppVehiclesRoute
+  '/app/workshop': typeof AppWorkshopRoute
+  '/app/': typeof AppIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/app'
+    | '/customers'
+    | '/dvla'
+    | '/features'
+    | '/pricing'
+    | '/app/analytics'
+    | '/app/calendar'
+    | '/app/customers'
+    | '/app/fleet'
+    | '/app/invoices'
+    | '/app/lookup'
+    | '/app/settings'
+    | '/app/vehicles'
+    | '/app/workshop'
+    | '/app/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/customers'
+    | '/dvla'
+    | '/features'
+    | '/pricing'
+    | '/app/analytics'
+    | '/app/calendar'
+    | '/app/customers'
+    | '/app/fleet'
+    | '/app/invoices'
+    | '/app/lookup'
+    | '/app/settings'
+    | '/app/vehicles'
+    | '/app/workshop'
+    | '/app'
+  id:
+    | '__root__'
+    | '/'
+    | '/app'
+    | '/customers'
+    | '/dvla'
+    | '/features'
+    | '/pricing'
+    | '/app/analytics'
+    | '/app/calendar'
+    | '/app/customers'
+    | '/app/fleet'
+    | '/app/invoices'
+    | '/app/lookup'
+    | '/app/settings'
+    | '/app/vehicles'
+    | '/app/workshop'
+    | '/app/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AppRoute: typeof AppRouteWithChildren
+  CustomersRoute: typeof CustomersRoute
+  DvlaRoute: typeof DvlaRoute
+  FeaturesRoute: typeof FeaturesRoute
+  PricingRoute: typeof PricingRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/pricing': {
+      id: '/pricing'
+      path: '/pricing'
+      fullPath: '/pricing'
+      preLoaderRoute: typeof PricingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/features': {
+      id: '/features'
+      path: '/features'
+      fullPath: '/features'
+      preLoaderRoute: typeof FeaturesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dvla': {
+      id: '/dvla'
+      path: '/dvla'
+      fullPath: '/dvla'
+      preLoaderRoute: typeof DvlaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/customers': {
+      id: '/customers'
+      path: '/customers'
+      fullPath: '/customers'
+      preLoaderRoute: typeof CustomersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/app': {
+      id: '/app'
+      path: '/app'
+      fullPath: '/app'
+      preLoaderRoute: typeof AppRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,22 +270,115 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/app/': {
+      id: '/app/'
+      path: '/'
+      fullPath: '/app/'
+      preLoaderRoute: typeof AppIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/workshop': {
+      id: '/app/workshop'
+      path: '/workshop'
+      fullPath: '/app/workshop'
+      preLoaderRoute: typeof AppWorkshopRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/vehicles': {
+      id: '/app/vehicles'
+      path: '/vehicles'
+      fullPath: '/app/vehicles'
+      preLoaderRoute: typeof AppVehiclesRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/settings': {
+      id: '/app/settings'
+      path: '/settings'
+      fullPath: '/app/settings'
+      preLoaderRoute: typeof AppSettingsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/lookup': {
+      id: '/app/lookup'
+      path: '/lookup'
+      fullPath: '/app/lookup'
+      preLoaderRoute: typeof AppLookupRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/invoices': {
+      id: '/app/invoices'
+      path: '/invoices'
+      fullPath: '/app/invoices'
+      preLoaderRoute: typeof AppInvoicesRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/fleet': {
+      id: '/app/fleet'
+      path: '/fleet'
+      fullPath: '/app/fleet'
+      preLoaderRoute: typeof AppFleetRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/customers': {
+      id: '/app/customers'
+      path: '/customers'
+      fullPath: '/app/customers'
+      preLoaderRoute: typeof AppCustomersRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/calendar': {
+      id: '/app/calendar'
+      path: '/calendar'
+      fullPath: '/app/calendar'
+      preLoaderRoute: typeof AppCalendarRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/analytics': {
+      id: '/app/analytics'
+      path: '/analytics'
+      fullPath: '/app/analytics'
+      preLoaderRoute: typeof AppAnalyticsRouteImport
+      parentRoute: typeof AppRoute
+    }
   }
 }
 
+interface AppRouteChildren {
+  AppAnalyticsRoute: typeof AppAnalyticsRoute
+  AppCalendarRoute: typeof AppCalendarRoute
+  AppCustomersRoute: typeof AppCustomersRoute
+  AppFleetRoute: typeof AppFleetRoute
+  AppInvoicesRoute: typeof AppInvoicesRoute
+  AppLookupRoute: typeof AppLookupRoute
+  AppSettingsRoute: typeof AppSettingsRoute
+  AppVehiclesRoute: typeof AppVehiclesRoute
+  AppWorkshopRoute: typeof AppWorkshopRoute
+  AppIndexRoute: typeof AppIndexRoute
+}
+
+const AppRouteChildren: AppRouteChildren = {
+  AppAnalyticsRoute: AppAnalyticsRoute,
+  AppCalendarRoute: AppCalendarRoute,
+  AppCustomersRoute: AppCustomersRoute,
+  AppFleetRoute: AppFleetRoute,
+  AppInvoicesRoute: AppInvoicesRoute,
+  AppLookupRoute: AppLookupRoute,
+  AppSettingsRoute: AppSettingsRoute,
+  AppVehiclesRoute: AppVehiclesRoute,
+  AppWorkshopRoute: AppWorkshopRoute,
+  AppIndexRoute: AppIndexRoute,
+}
+
+const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AppRoute: AppRouteWithChildren,
+  CustomersRoute: CustomersRoute,
+  DvlaRoute: DvlaRoute,
+  FeaturesRoute: FeaturesRoute,
+  PricingRoute: PricingRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
