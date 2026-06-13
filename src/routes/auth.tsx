@@ -31,31 +31,88 @@ function AuthPage() {
   const [businessName, setBusinessName] = useState("");
   const navigate = useNavigate();
 
+  const handleForgotPassword = async () => {
+    if (!email.trim()) {
+      toast.error("Please enter your email address first");
+      return;
+    }
+    
+    setIsLoading(true);
+    try {
+      const { error } = await supabase.auth.resetPasswordForEmail(email.trim(), {
+        redirectTo: `${window.location.origin}/auth?reset=true`,
+      });
+      if (error) throw error;
+      toast.success("Password reset link sent to your email");
+    } catch (error: any) {
+      toast.error(error.message || "Failed to send reset link");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsLoading(true);
+    
+    const trimmedEmail = email.trim();
+    const trimmedPassword = password.trim();
 
+    if (!trimmedEmail || !trimmedPassword) {
+      toast.error("Please fill in all required fields");
+      return;
+    }
+
+    if (!isLogin && !businessName.trim()) {
+      toast.error("Business name is required");
+      return;
+    }
+
+    setIsLoading(true);
     try {
       if (isLogin) {
         const { error } = await supabase.auth.signInWithPassword({
-          email,
-          password,
+          email: trimmedEmail,
+          password: trimmedPassword,
         });
-        if (error) throw error;
+        
+        if (error) {
+          console.error("Login error:", error);
+          if (error.message === "Invalid login credentials") {
+            throw new Error("Incorrect email or password. Please try again.");
+          }
+          if (error.message.includes("Email not confirmed")) {
+            throw new Error("Please confirm your email address before logging in.");
+          }
+          throw error;
+        }
+        
         toast.success("Signed in successfully");
         navigate({ to: "/app" });
       } else {
+        if (trimmedPassword.length < 6) {
+          throw new Error("Password must be at least 6 characters long");
+        }
+
         const { error } = await supabase.auth.signUp({
-          email,
-          password,
+          email: trimmedEmail,
+          password: trimmedPassword,
           options: {
             data: {
-              business_name: businessName,
+              business_name: businessName.trim(),
             },
           },
         });
-        if (error) throw error;
+        
+        if (error) {
+          console.error("Signup error:", error);
+          if (error.message.includes("User already registered")) {
+            throw new Error("This email is already registered. Please sign in instead.");
+          }
+          throw error;
+        }
+        
         toast.success("Check your email for the confirmation link");
+        setIsLogin(true); 
       }
     } catch (error: any) {
       toast.error(error.message || "An error occurred during authentication");
@@ -112,7 +169,12 @@ function AuthPage() {
               <div className="flex items-center justify-between">
                 <Label htmlFor="password">Password</Label>
                 {isLogin && (
-                  <button type="button" className="text-xs text-accent hover:underline">
+                  <button
+                    type="button"
+                    onClick={handleForgotPassword}
+                    className="text-xs text-accent hover:underline disabled:opacity-50"
+                    disabled={isLoading}
+                  >
                     Forgot password?
                   </button>
                 )}
